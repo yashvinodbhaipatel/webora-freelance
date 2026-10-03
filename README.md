@@ -13,12 +13,22 @@ npm start
 
 Open http://127.0.0.1:4173. Deploy the contents of `dist/` to a static host, or serve the root files directly. Rebuild after editing `main.ts`; `main.js` is generated.
 
+## Pages
+
+24 static pages: Home, Work, Services, Technology, About, Insights, Careers & collaboration, Contact, seven service pages, five concept project pages, three original articles, and Privacy. Every page has its own title and description.
+
+## Expertise presented
+
+HTML, CSS, JavaScript, TypeScript, React, React Native, Node.js, PHP, SQL, MongoDB, and Shopify design/development, plus marketing, UGC, influencer campaigns, and 3D maps. The portfolio itself remains a lightweight static HTML/CSS/TypeScript website.
+
 ## Features
 
 - Responsive typography and mobile navigation
-- Scroll reveals, subtle scroll-linked artwork, and reduced-motion support
-- Original CSS artwork, three explicitly labelled concept projects, and project detail dialogs
-- Five service categories and accessible native disclosure controls
+- Branded page-load curtain, staggered headline reveals, page transitions, scroll progress, parallax artwork, moving type bands, and stacked service cards
+- Reduced-motion support and a persistent pause-motion control
+- Filterable concept work and linked project, service, and article detail pages
+- Original CSS artwork and five explicitly labelled concept projects
+- Seven service categories and accessible native disclosure controls
 - WhatsApp enquiry composer with browser validation; visitors review and send messages in WhatsApp
 - Direct Instagram and WhatsApp links
 
@@ -30,9 +40,10 @@ Portfolio concepts are illustrative, not real client engagements. Replace them w
 
 ## Editing
 
-- Content, social links, metadata: `index.html`
+- Homepage and shared header/footer: `index.html`
+- Additional page content and templates: `pages.mjs` and `brand-pages.mjs` (generate the other HTML files during build)
 - Colours, layouts, artwork, responsive styles: `styles.css`
 - Interactions and WhatsApp destination: `main.ts`
 - Build and local server: `build.mjs` and `serve.mjs`
 
-The design draws inspiration from the editorial scale of the supplied Screen Pilot reference, using original Webora copy and artwork. Hosting and domain setup are separate from this source delivery.
+The design draws inspiration from the editorial scale of the supplied Screen Pilot reference, using original Webora copy and artwork. Hosting and domain setup are separate from this source delivery. Rebuild after edits to regenerate all pages. The generated HTML and compiled JavaScript are checked in so the site can also be served without a build step.
