@@ -63,7 +63,7 @@ filters.forEach(button => button.addEventListener('click', () => {
     project.hidden = filter !== 'all' && project.dataset.category !== filter;
     if (!project.hidden) { count++; project.classList.add('visible'); }
   });
-  document.querySelector('.filter-status')!.textContent = `Showing ${count} concept project${count === 1 ? '' : 's'}`;
+  document.querySelector('.filter-status')!.textContent = `Showing ${count} service illustration${count === 1 ? '' : 's'}`;
 }));
 const progress = document.querySelector<HTMLElement>('.scroll-progress')!;
 const showcase = document.querySelector<HTMLElement>('.showcase');
@@ -97,3 +97,9 @@ document.addEventListener('click', event => {
   setTimeout(() => location.assign(next.href), 260);
 });
 window.addEventListener('pageshow', () => root.classList.remove('page-leaving'));
+
+// Animate each illustration only while it is on screen.
+const sceneObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+  entry.target.classList.toggle('scene-in-view', entry.isIntersecting);
+}), { threshold: .12 });
+document.querySelectorAll('.service-scene').forEach(scene => sceneObserver.observe(scene));
