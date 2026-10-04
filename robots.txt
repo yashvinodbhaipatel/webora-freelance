@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yashvinodbhaipatel.github.io/webora-freelance/sitemap.xml

@@ -1,50 +1,47 @@
-# Webora
+# Webora — React + TypeScript
 
-A bespoke, responsive freelance creative portfolio in semantic HTML, CSS, and TypeScript, with compiled JavaScript included for simple static hosting.
+The Webora freelance portfolio for Yash Patel (Patel Yash), built with React. The migration retains the existing CSS, artwork, page structure, animation timings and 24 HTML URLs. React owns the menu, service filters, motion preference and WhatsApp enquiry form. Pages are rendered to HTML at build time, then hydrated in the browser, preserving SEO and direct links on GitHub Pages.
 
-## Run
+Live: https://yashvinodbhaipatel.github.io/webora-freelance/
 
-Requires Node.js 22.13+ (Node 24 recommended). No package installation is needed.
+## Run and build
+
+Requires Node.js 22.13 or newer. Install with `npm install` (or `pnpm install` using the included lockfile), then:
 
 ```sh
+npm run typecheck
 npm run build
+npm run check
 npm start
 ```
 
-Open http://127.0.0.1:4173. Deploy the contents of `dist/` to a static host, or serve the root files directly. Rebuild after editing `main.ts`; `main.js` is generated.
+Open http://127.0.0.1:4173. `build.mjs` bundles React with esbuild, renders all 24 routes using `react-dom/server`, adds SEO metadata and produces `dist/`. The client uses `hydrateRoot`; it does not replace the existing pages with blank client-only shells. Generated root HTML and `main.js` are also checked in for the current GitHub Pages main-branch/root deployment. Commit regenerated files after every change. No Node server is required in production.
 
-## Pages
+## Edit the source
 
-24 static pages: Home, Work, Services, Technology, About, Insights, Careers & collaboration, Contact, seven service pages, five service demonstration pages, three original articles, and Privacy. Every page has its own title and description.
+- `page-*.tsx`: individual page components, including inline SVG service illustrations. These are the source of page content; do not edit generated `.html` files.
+- `react-app.tsx`: shared application shell and motion/dialog state.
+- `react-header.tsx`, `react-footer.tsx`, `react-dialog.tsx`: shared components.
+- `react-motion.ts`: scroll animation and intersection-observer lifecycle, with cleanup.
+- `react-context.ts`: shared UI actions and state.
+- `react-pages.ts`: typed route registry.
+- `react-client.tsx` / `react-server.tsx`: hydration and prerendering entry points.
+- `styles.css`: original responsive design and animation rules.
+- `seo.mjs` and `page-heads.json`: search metadata and head defaults. Keep structured data consistent with visible content.
+- `service-visuals.mjs`: service descriptions used by SEO; its older artwork generator is retained for reference. `brand-pages.mjs` is a legacy reference, not used by the React build. `pages.mjs` forwards to the React build for compatibility.
 
-## Expertise presented
+## Features and content
 
-HTML, CSS, JavaScript, TypeScript, React, React Native, Node.js, PHP, SQL, MongoDB, and Shopify design/development, plus marketing, UGC, influencer campaigns, and 3D maps. The portfolio itself remains a lightweight static HTML/CSS/TypeScript website.
+Seven animated service illustrations cover websites, Shopify, React Native apps, Meta/Google ads, UGC, influencer collaborations and 3D maps. They are service demonstrations, not commissioned client work or reported results. Responsive navigation, page-load and scroll animations, a motion toggle, reduced-motion support, and an accessible native enquiry dialog are retained.
 
-## Features
+Public contact: WhatsApp +91 8469030829; Instagram https://www.instagram.com/webora.co.in_/ . The form creates a WhatsApp draft for the visitor to review and send; the website does not save enquiries. Google Fonts are loaded with system fallbacks.
 
-- Responsive typography and mobile navigation
-- Branded page-load curtain, staggered headline reveals, page transitions, scroll progress, parallax artwork, moving type bands, and stacked service cards
-- Reduced-motion support and a persistent pause-motion control
-- Filterable service illustrations and linked project, service, and article detail pages
-- Seven original animated SVG service illustrations: Meta/Google ads, Shopify, websites, mobile apps, UGC, influencer collaborations, and 3D maps
-- Seven service categories and accessible native disclosure controls
-- WhatsApp enquiry composer with browser validation; visitors review and send messages in WhatsApp
-- Direct Instagram and WhatsApp links
+## SEO and indexing
 
-## Content
+Every route is prerendered with one primary heading, a unique title and description, canonical URL, social metadata and connected JSON-LD. The sitemap has all 24 public URLs. Visible content identifies Yash Patel and Patel Yash and describes remote services for the USA, Canada, India, the UK and Australia; these are service markets, not offices.
 
-Brand: Webora. WhatsApp: +91 8469030829. Instagram: https://www.instagram.com/webora.co.in_/
+Add the URL-prefix property `https://yashvinodbhaipatel.github.io/webora-freelance/` to Google Search Console, verify ownership using the supplied HTML file or meta tag, then submit `sitemap.xml`. Verification and submission require the owner's account and have not been completed. The project-level `robots.txt` is informational: crawlers use the file at the domain root, which this GitHub project cannot control. Rankings, indexing and AI citations are not guaranteed.
 
-Service demonstrations are illustrative, not real client engagements. Replace them with verified projects as they become available. No fabricated testimonials or results are included. The form sends no messages automatically and stores no personal information. Fonts load from Google Fonts, with system fallbacks.
+## Validation
 
-## Editing
-
-- Homepage and shared header/footer: `index.html`
-- Additional page content and templates: `pages.mjs` and `brand-pages.mjs` (generate the other HTML files during build)
-- Service artwork and homepage illustration galleries: `service-visuals.mjs` (generated into the marked sections of `index.html`)
-- Colours, layouts, artwork, responsive styles: `styles.css`
-- Interactions and WhatsApp destination: `main.ts`
-- Build and local server: `build.mjs` and `serve.mjs`
-
-The design draws inspiration from the editorial scale of the supplied Screen Pilot reference, using original Webora copy and artwork. Hosting and domain setup are separate from this source delivery. Rebuild after edits to regenerate all pages. The generated HTML and compiled JavaScript are checked in so the site can also be served without a build step.
+`npm run typecheck` checks the React TypeScript source. `npm run check` checks the generated routes, headings, local links, metadata and sitemap. Migration validation also compared normalized element attributes and visible text against the original on all 24 pages, plus browser checks for hydration, responsive navigation, filtering, dialog opening/closing and motion preferences.

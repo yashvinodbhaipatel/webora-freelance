@@ -1,7 +1,12 @@
-import { stripTypeScriptTypes } from 'node:module';
+import { build } from 'esbuild';
 import { readFile, writeFile, mkdir, copyFile, readdir } from 'node:fs/promises';
-await import('./pages.mjs');
-await mkdir('dist', { recursive: true });
-await writeFile('main.js', stripTypeScriptTypes(await readFile('main.ts', 'utf8')));
-for (const file of [...(await readdir('.')).filter(file=>file.endsWith('.html')),'styles.css','main.js','favicon.svg']) await copyFile(file, `dist/${file}`);
-console.log('Built static website in dist/');
+await mkdir('.build',{recursive:true});
+await build({entryPoints:['react-server.tsx'],outfile:'.build/server.mjs',bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic'});
+const { renderPage }=await import('./.build/server.mjs?build='+Date.now());
+const heads=JSON.parse(await readFile('page-heads.json','utf8'));
+for(const [page,head] of Object.entries(heads))await writeFile(page+'.html',`<!doctype html>\n<html lang="en"><head>${head}<script type="module" src="./main.js"></script></head><body><div id="webora-root" data-page="${page}" style="display:contents">${renderPage(page)}</div></body></html>\n`);
+await import('./seo.mjs');
+await build({entryPoints:['react-client.tsx'],outfile:'main.js',bundle:true,platform:'browser',format:'esm',jsx:'automatic',minify:true,define:{'process.env.NODE_ENV':'"production"'},target:['es2022'],legalComments:'eof'});
+await mkdir('dist',{recursive:true});
+for(const file of [...(await readdir('.')).filter(f=>f.endsWith('.html')),'styles.css','main.js','favicon.svg','sitemap.xml','robots.txt'])await copyFile(file,`dist/${file}`);
+console.log(`Built ${Object.keys(heads).length} React-rendered pages in dist/.`);

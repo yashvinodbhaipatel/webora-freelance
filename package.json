@@ -1,1 +1,23 @@
-{"name":"webora-freelance","version":"1.0.0","private":true,"type":"module","scripts":{"build":"node build.mjs","start":"node serve.mjs"},"engines":{"node":">=22.13"}}
+{
+  "name": "webora-freelance",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "start": "node serve.mjs",
+    "typecheck": "tsc --noEmit",
+    "check": "node check-react.mjs"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "dependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}
